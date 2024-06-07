@@ -79,10 +79,15 @@ WSGI_APPLICATION = 'seguridad.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.hedwmixgqtmxzppsucbn',
+        'PASSWORD': 'D9mi3vqR0z1WlGTv',
+        'HOST': 'aws-0-sa-east-1.pooler.supabase.com',  # por ejemplo, xyz.supabase.co
+        'PORT': '6543',  # El puerto por defecto para PostgreSQL
     }
 }
+
 
 
 # Password validation

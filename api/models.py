@@ -3,11 +3,11 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class Usuario(AbstractUser):
-    username      = models.CharField(unique=True, max_length=20)
+    username      = models.CharField(unique=True)
     email         = models.EmailField()
-    password      = models.CharField(max_length=20)
-    rol           = models.CharField(max_length=20)
-    departamento  = models.CharField(max_length=20)
+    password      = models.CharField()
+    rol           = models.CharField()
+    departamento  = models.CharField()
     
     USERNAME_FIELD = 'username'
     EMAIL_FIELD    = 'email'
