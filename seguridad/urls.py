@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.views.generic.base import RedirectView
 from django.urls import path,include
 from rest_framework.documentation import include_docs_urls
 from rest_framework_simplejwt.views import (
@@ -24,6 +25,7 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='api/v1/login', permanent=False)),
     path('api/v1/', include('api.urls')),
     path('docs/',include_docs_urls(title='api documentacion')),
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

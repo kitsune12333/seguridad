@@ -16,6 +16,12 @@ from django.shortcuts import render
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UsuariosSerializer"""
+"""class Prueba(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format=None):
+        return render(request, 'api/index.html')
+"""
     
 """
 class Register(viewsets.ModelViewSet):
@@ -27,12 +33,6 @@ class IndexView(APIView):
     
     def get(self, request, format=None):
         return render(request, 'api/index.html')
-"""class Prueba(APIView):
-    permission_classes = [IsAuthenticated]
-    
-    def get(self, request, format=None):
-        return render(request, 'api/index.html')
-"""
 def LoginUsuario(request):
     return render(request, 'api/login.html')
 def RegisterUsuario(request):
