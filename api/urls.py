@@ -1,17 +1,12 @@
-from django.urls import path,include
-from rest_framework import routers
-from api import views
-'''
-router = routers.DefaultRouter()
-router.register(r'usuarios',views.UsuarioViewSet)'''
+# urls.py
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name="index"),
-    #path('prueba/',views.Prueba.as_view()),
-    path('add/', views.UsuarioAdd, name="user_add"),
-    path('listar/', views.ListarUsuarios, name="listar"),
-    path('validar/', views.ValidarUsuario, name="validar"),
-    path('login/', views.LoginUsuario, name="login"),
-    path('register/', views.RegisterUsuario, name="register"),
-    
+    path('', views.IndexView.as_view(), name='index'),
+    path('login/', views.LoginUsuario, name='login_usuario'),
+    path('register/', views.RegisterUsuario, name='register_usuario'),
+    path('usuario_add/', views.UsuarioAdd, name='usuario_add'),
+    path('listar_usuarios/', views.ListarUsuarios, name='listar_usuarios'),
+    path('validar_usuario/', views.ValidarUsuario, name='validar_usuario'),
 ]
