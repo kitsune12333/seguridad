@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Dale la vuelta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="{% static 'venta/css/style.css' %}">-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
@@ -38,7 +37,7 @@
 
         .btn-primary {
             background-color: #0C4B33;
-            border-color: #0C4B33;
+            border-color: #0C4B33
         }
 
         .btn-primary:hover {
@@ -64,7 +63,7 @@
         <div id="fuente-login" class="login">
             <br>
             <h1 class="text-center">Iniciar Sesión</h1>
-            <form class="needs-validation" method="POST" action="{% url 'validar' %}">
+            <form class="needs-validation" method="POST" action="{% url 'validar_usuario' %}">
                 {% csrf_token %}
                 <br>
                 <div class="form-group">
@@ -74,6 +73,10 @@
                 <div class="form-group">
                     <label class="form-label" for="password">Contraseña</label>
                     <input class="form-control" name="password" type="password" id="password" placeholder="************" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="token">Token</label>
+                    <input class="form-control" name="token" type="text" id="token" placeholder="Ingrese su token de grupo" required>
                 </div>
                 <div class="form-group form-check">
                     <input class="form-check-input" type="checkbox" id="check">
@@ -85,7 +88,7 @@
                 </div>
                 <br>
                 <div class="text-center small">
-                    <a href="{% url 'register' %}">¿Aún no tienes una cuenta?</a>
+                    <a href="{% url 'register_usuario' %}">¿Aún no tienes una cuenta?</a>
                 </div>
             </form>
         </div>
