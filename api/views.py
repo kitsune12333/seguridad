@@ -40,10 +40,6 @@ def UsuarioAdd(request):
     departamento = request.data.get('departamento')
     
     for i in data_tokens:
-        print(i["departamento"])
-        print("2 "+ departamento)
-        print(i["token"])
-        print("2 "+ token)
         if i["departamento"] == departamento and i["token"] == token:
             serializer = UsuariosSerializer(data=request.data)
             if serializer.is_valid():
