@@ -80,10 +80,10 @@ def ValidarUsuario(request):
     if user is not None:
         departamento = user.departamento
         for i in data_tokens:
+            print(i)
             if i["departamento"] == departamento and i["token"] == token:
                 return render(request, 'api/index.html', {'user': user})
-            else:
-                return Response({"error": "Token inválido"}, status=400)
+        return Response({"error": "Token inválido"}, status=400)
     else:
         return Response({"error": "Credenciales inválidas"}, status=400)
 
