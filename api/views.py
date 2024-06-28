@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from django.shortcuts import render
 from django.contrib.auth import authenticate
 import os
+import json
 from supabase import create_client, Client
 
 #Direccion SUPABASE
@@ -17,7 +18,7 @@ supabase: Client = create_client(url, key)
 
 
 class IndexView(APIView):
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
         return render(request, 'api/index.html')
 
@@ -29,15 +30,20 @@ def RegisterUsuario(request):
 
 @api_view(["POST"])
 def UsuarioAdd(request):
-    token = request.data.get('token')
-    departamento = request.data.get('departamento')
     
     response = supabase.table("token_departamento").select("*").execute()
     data_tokens = [
             {'id': item['id'], 'departamento': item['departamento'], 'token': item['token']}
             for item in response.data]
-
+    
+    token = request.data.get('token')
+    departamento = request.data.get('departamento')
+    
     for i in data_tokens:
+        print(i["departamento"])
+        print("2 "+ departamento)
+        print(i["token"])
+        print("2 "+ token)
         if i["departamento"] == departamento and i["token"] == token:
             serializer = UsuariosSerializer(data=request.data)
             if serializer.is_valid():
@@ -45,8 +51,8 @@ def UsuarioAdd(request):
                 return render(request, 'api/login.html')
             else:
                 return Response(serializer.errors)
-        else:
-            return Response({"error": "Token inválido"}, status=400)
+        
+    return Response({"error": "Token inválido"}, status=400)
 
 @api_view(["GET"])
 def ListarUsuarios(request):
@@ -56,9 +62,18 @@ def ListarUsuarios(request):
 
 @api_view(["POST"])
 def ValidarUsuario(request):
-    username = request.POST.get("username")
-    password = request.POST.get("password")
-    token = request.POST.get("token")
+    try:#SI LA DATA ES DE JSON
+        
+        data = json.loads(request.body)
+        username = data.get("username")
+        password = data.get("password")
+        token = data.get("token")
+        
+    except json.JSONDecodeError:#SI NO LO ES
+
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        token = request.POST.get("token")
     
     response = supabase.table("token_departamento").select("*").execute()
     data_tokens = [
@@ -75,3 +90,5 @@ def ValidarUsuario(request):
                 return Response({"error": "Token inválido"}, status=400)
     else:
         return Response({"error": "Credenciales inválidas"}, status=400)
+
+
