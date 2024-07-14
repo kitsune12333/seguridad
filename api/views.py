@@ -10,6 +10,7 @@ import os
 import json
 from supabase import create_client, Client
 
+
 #Direccion SUPABASE
 url: str = os.environ.get("SUPABASE_URL","https://hedwmixgqtmxzppsucbn.supabase.co")
 key: str = os.environ.get("SUPABASE_KEY","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlZHdtaXhncXRteHpwcHN1Y2JuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc3NzI1MDMsImV4cCI6MjAzMzM0ODUwM30.f9vEpMtNGIFU7xO11w51Ct9CDVFY78RndNnNg_ntseI")
@@ -58,33 +59,31 @@ def ListarUsuarios(request):
 
 @api_view(["POST"])
 def ValidarUsuario(request):
-    try:#SI LA DATA ES DE JSON
-        
+    try:
+        # Si la data es JSON
         data = json.loads(request.body)
         username = data.get("username")
         password = data.get("password")
         token = data.get("token")
-        
-    except json.JSONDecodeError:#SI NO LO ES
-
+    except json.JSONDecodeError:
+        # Si no lo es
         username = request.POST.get("username")
         password = request.POST.get("password")
         token = request.POST.get("token")
     
     response = supabase.table("token_departamento").select("*").execute()
     data_tokens = [
-            {'id': item['id'], 'departamento': item['departamento'], 'token': item['token']}
-            for item in response.data]
+        {'id': item['id'], 'departamento': item['departamento'], 'token': item['token']}
+        for item in response.data
+    ]
     
     user = authenticate(username=username, password=password)
     if user is not None:
         departamento = user.departamento
         for i in data_tokens:
-            print(i)
             if i["departamento"] == departamento and i["token"] == token:
-                return render(request, 'api/index.html', {'user': user})
+                return Response({"status": "success", "user": {"username": user.username, "departamento": departamento}})
         return Response({"error": "Token inválido"}, status=400)
     else:
         return Response({"error": "Credenciales inválidas"}, status=400)
-
 
